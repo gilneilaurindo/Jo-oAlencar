@@ -1,635 +1,925 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-PT" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portal João Alencar - Olho da Notícia. As principais notícias policiais, políticas e do cotidiano de Sousa-PB e região.">
+    <meta name="description" content="Portal João Alencar - Olho da Notícia.">
     <meta name="theme-color" content="#1e3a8a">
     
-    <!-- --- CONFIGURAÇÃO DE COMPARTILHAMENTO --- -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://joaoalencar.com.br/">
-    <meta property="og:title" content="João Alencar | Olho da Notícia">
-    <meta property="og:description" content="Acompanhe em tempo real as notícias policiais, políticas e do cotidiano de Sousa e região. A verdade com credibilidade.">
-    <meta property="og:image" content="https://placehold.co/1200x630/1e3a8a/ffffff?text=JOÃO+ALENCAR+-+OLHO+DA+NOTÍCIA&font=roboto">
-    <meta property="og:locale" content="pt_BR">
-    <meta property="og:site_name" content="Portal João Alencar">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="João Alencar | Olho da Notícia">
-    <meta name="twitter:image" content="https://placehold.co/1200x630/1e3a8a/ffffff?text=JOÃO+ALENCAR+-+OLHO+DA+NOTÍCIA&font=roboto">
-
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👁️</text></svg>">
-
     <title>João Alencar | Olho da Notícia</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👁️</text></svg>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Merriweather:ital,wght@0,700;1,900&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Merriweather', 'serif'],
-                    },
-                    colors: {
-                        brand: {
-                            red: '#b91c1c',   
-                            blue: '#1e3a8a',  
-                            yellow: '#eab308' 
-                        }
-                    },
-                    animation: {
-                        'marquee': 'marquee 25s linear infinite',
-                    },
-                    keyframes: {
-                        marquee: {
-                            '0%': { transform: 'translateX(100%)' },
-                            '100%': { transform: 'translateX(-100%)' },
-                        }
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Merriweather', 'serif'] },
+                    colors: { brand: { dark: '#0f172a', red: '#b91c1c', blue: '#1e3a8a', yellow: '#eab308' } },
+                    animation: { 'marquee': 'marquee 25s linear infinite' },
+                    keyframes: { marquee: { '0%': { transform: 'translateX(100%)' }, '100%': { transform: 'translateX(-100%)' } } }
                 }
             }
         }
     </script>
-
     <script src="https://unpkg.com/lucide@latest"></script>
-
     <style>
         body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #b91c1c; }
-        .glass-effect { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .glass-effect { background: rgba(255, 255, 255, 0.90); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); }
+        .glass-dark { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px); }
         .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        
-        /* Transição Suave para os Banners */
-        .banner-fade {
-            transition: opacity 0.5s ease-in-out;
-            opacity: 1;
-        }
-        .banner-fade.hidden-opacity {
-            opacity: 0.4;
-        }
+        .banner-fade { transition: opacity 0.5s ease-in-out; opacity: 1; }
+        .banner-fade.hidden-opacity { opacity: 0.4; }
+        .fade-enter { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
     </style>
 </head>
-<body class="bg-[#f8f9fa] text-gray-900 pb-20 md:pb-0 selection:bg-red-200 selection:text-red-900">
+<body class="bg-[#f8f9fa] text-gray-900 selection:bg-red-200 selection:text-red-900 flex flex-col min-h-screen relative">
 
-    <!-- 1. BARRA DE TOPO (DESKTOP) -->
-    <div class="bg-gradient-to-r from-brand-blue to-blue-800 text-white text-xs py-2 hidden md:block border-b border-blue-900">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            <div class="flex items-center gap-4 opacity-90 font-medium">
-                <span class="flex items-center gap-1 capitalize" id="current-date">
-                    <i data-lucide="clock" class="w-3 h-3"></i> Carregando...
-                </span>
-                <span class="w-px h-3 bg-white/30"></span>
-                <span class="flex items-center gap-1 font-bold text-yellow-300">
-                    <i data-lucide="map-pin" class="w-3 h-3"></i> Sousa - PB
-                </span>
+    <!-- ========================================== -->
+    <!-- ÁREA PÚBLICA (O PORTAL)                    -->
+    <!-- ========================================== -->
+    <div id="public-portal" class="flex-1 pb-20 md:pb-0 transition-all duration-500">
+        
+        <!-- BARRA DE TOPO -->
+        <div class="bg-gradient-to-r from-brand-blue to-blue-800 text-white text-xs py-2 hidden md:block border-b border-blue-900">
+            <div class="container mx-auto px-4 flex justify-between items-center">
+                <div class="flex items-center gap-4 opacity-90 font-medium">
+                    <span id="current-date" class="flex items-center gap-1 capitalize"><i data-lucide="clock" class="w-3 h-3"></i> A carregar...</span>
+                    <span class="w-px h-3 bg-white/30"></span>
+                    <span class="flex items-center gap-1 font-bold text-yellow-300"><i data-lucide="map-pin" class="w-3 h-3"></i> Sousa - PB</span>
+                </div>
+                <div class="flex gap-4 font-bold tracking-wide items-center">
+                    <a href="#" class="hover:text-yellow-300 transition flex items-center gap-1">CONTACTE-NOS</a>
+                    <!-- BOTÃO ESTRATÉGICO DE LOGIN -->
+                    <button onclick="app.toggleLoginModal(true)" id="btn-login-trigger" class="bg-white text-brand-blue px-3 py-0.5 rounded-full hover:bg-yellow-300 hover:text-black transition shadow-sm flex items-center gap-1">
+                        <i data-lucide="lock" class="w-3 h-3"></i> ACESSO RESTRITO
+                    </button>
+                    <!-- BOTÃO QUE APARECE QUANDO LOGADO -->
+                    <button onclick="app.openAdminPanel()" id="btn-admin-trigger" class="hidden bg-green-500 text-white px-3 py-0.5 rounded-full hover:bg-green-400 transition shadow-sm flex items-center gap-1">
+                        <i data-lucide="layout-dashboard" class="w-3 h-3"></i> PAINEL EDITOR
+                    </button>
+                </div>
             </div>
-            <div class="flex gap-4 font-bold tracking-wide">
-                <a href="#" class="hover:text-yellow-300 transition flex items-center gap-1"><i data-lucide="message-circle" class="w-3 h-3"></i> FALE CONOSCO</a>
-                <a href="#" class="hover:text-yellow-300 transition flex items-center gap-1"><i data-lucide="share-2" class="w-3 h-3"></i> ANUNCIE</a>
-                <a href="#" class="bg-white text-brand-blue px-3 py-0.5 rounded-full hover:bg-yellow-300 hover:text-black transition shadow-sm flex items-center gap-1">
-                    <i data-lucide="lock" class="w-3 h-3"></i> ÁREA DO PARCEIRO
-                </a>
+        </div>
+
+        <!-- CABEÇALHO -->
+        <header class="bg-white shadow-md sticky top-0 z-40 border-t-4 border-brand-blue">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between h-20 md:h-28">
+                    <!-- LOGÓTIPO -->
+                    <a href="#" onclick="app.goHome(); return false;" class="flex flex-col leading-none select-none group">
+                        <div class="flex items-baseline gap-1 group-hover:scale-[1.02] transition-transform origin-left">
+                            <span class="text-4xl md:text-5xl font-black text-brand-blue tracking-tighter italic">JOÃO</span>
+                            <span class="text-4xl md:text-5xl font-black text-brand-red tracking-tighter italic">ALENCAR</span>
+                        </div>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="h-0.5 w-8 bg-yellow-500 hidden md:block"></span>
+                            <span class="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] text-gray-400 group-hover:text-brand-red transition-colors">Olho da Notícia</span>
+                        </div>
+                    </a>
+
+                    <!-- BANNER TOPO ROTATIVO (DINÂMICO) -->
+                    <div class="hidden lg:block w-[728px] h-[90px] relative group overflow-hidden bg-gray-100 rounded border border-gray-200">
+                        <span class="absolute top-0 right-0 text-[8px] text-gray-400 bg-white px-1 z-10 border-b border-l">PUBLICIDADE</span>
+                        <img id="banner-desktop-top" src="https://placehold.co/728x90/eeeeee/333333?text=A+Carregar+Publicidade..." class="w-full h-full object-cover banner-fade" loading="eager">
+                    </div>
+
+                    <button id="menu-open-btn" class="lg:hidden p-2 text-brand-blue hover:bg-blue-50 rounded-md transition-colors"><i data-lucide="menu" class="w-8 h-8"></i></button>
+                </div>
             </div>
+
+            <!-- NAVEGAÇÃO DESKTOP -->
+            <nav class="bg-brand-blue text-white hidden lg:block shadow-inner relative z-30">
+                <div class="container mx-auto px-4">
+                    <ul class="flex items-center font-bold text-sm uppercase tracking-wider">
+                        <li class="bg-brand-red hover:bg-red-600 transition-colors shadow-lg z-10"><a href="#" onclick="app.goHome(); return false;" class="px-6 py-4 flex items-center gap-2 block"><i data-lucide="home" class="w-4 h-4"></i> CAPA</a></li>
+                        <li class="hover:bg-white/10 transition-colors border-r border-white/5"><a href="#" onclick="app.goHome(); return false;" class="px-5 py-4 block">POLICIAL</a></li>
+                        <li class="hover:bg-white/10 transition-colors border-r border-white/5"><a href="#" onclick="app.goHome(); return false;" class="px-5 py-4 block">POLÍTICA</a></li>
+                        <li class="hover:bg-white/10 transition-colors border-r border-white/5"><a href="#" onclick="app.goHome(); return false;" class="px-5 py-4 block">QUOTIDIANO</a></li>
+                        <li class="hover:bg-white/10 transition-colors border-r border-white/5"><a href="#" onclick="app.goHome(); return false;" class="px-5 py-4 block">DESPORTO</a></li>
+                        <li class="hover:bg-white/10 transition-colors border-r border-white/5"><a href="#" onclick="app.goHome(); return false;" class="px-5 py-4 block">REGIÃO</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!-- MENU TELEMÓVEL -->
+        <div id="mobile-menu-overlay" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity opacity-0 invisible" aria-hidden="true">
+            <div id="mobile-menu-panel" class="fixed top-0 left-0 w-[85%] max-w-[320px] h-full bg-white shadow-2xl transition-transform duration-300 -translate-x-full flex flex-col">
+                <div class="p-5 bg-brand-blue text-white flex justify-between items-center shadow-md">
+                    <div class="font-black text-xl italic">JOÃO ALENCAR</div>
+                    <button id="menu-close-btn" class="p-1 hover:bg-white/10 rounded transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
+                </div>
+                <div class="overflow-y-auto h-full pb-20">
+                    <div class="p-4 bg-gray-50 border-b border-gray-100 sticky top-0 z-10">
+                        <form action="#" class="relative group">
+                            <input type="text" placeholder="Procurar notícia..." class="w-full pl-10 pr-4 py-3 bg-white rounded-lg border border-gray-200 focus:border-brand-red outline-none text-sm shadow-sm">
+                            <i data-lucide="search" class="absolute left-3 top-3.5 text-gray-400 w-4 h-4"></i>
+                        </form>
+                    </div>
+                    <ul class="py-2">
+                        <li class="px-4 py-3 font-bold text-gray-400 text-[10px] uppercase tracking-widest">Editorias</li>
+                        <li><a href="#" onclick="app.goHome(); document.getElementById('menu-close-btn').click(); return false;" class="block px-5 py-3 text-gray-800 font-bold border-b border-gray-50 hover:bg-gray-50 hover:text-brand-red transition-all">Página Inicial</a></li>
+                        <li><a href="#" class="block px-5 py-3 text-gray-800 font-bold border-b border-gray-50 hover:bg-gray-50 hover:text-brand-red transition-all">Policial</a></li>
+                        <li><a href="#" class="block px-5 py-3 text-gray-800 font-bold border-b border-gray-50 hover:bg-gray-50 hover:text-brand-blue transition-all">Política</a></li>
+                        <li><a href="#" class="block px-5 py-3 text-gray-800 font-bold border-b border-gray-50 hover:bg-gray-50 hover:text-green-700 transition-all">Quotidiano</a></li>
+                    </ul>
+                    
+                    <!-- Botões Admin Mobile -->
+                    <div class="p-4 mt-4">
+                        <button onclick="app.toggleLoginModal(true); document.getElementById('menu-close-btn').click();" id="btn-login-mobile" class="w-full bg-gray-100 text-gray-600 font-bold py-2 rounded flex items-center justify-center gap-2"><i data-lucide="lock" class="w-4 h-4"></i> Restrito</button>
+                        <button onclick="app.openAdminPanel(); document.getElementById('menu-close-btn').click();" id="btn-admin-mobile" class="hidden w-full bg-green-500 text-white font-bold py-2 rounded flex items-center justify-center gap-2"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Painel Editor</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLANTÃO -->
+        <div class="bg-black text-white border-b-4 border-yellow-500 relative z-20 shadow-lg overflow-hidden">
+            <div class="container mx-auto px-4 py-2 flex items-center">
+                <div class="bg-brand-red text-white text-[10px] md:text-xs font-black uppercase px-3 py-1 rounded mr-3 shadow-md flex items-center gap-2 whitespace-nowrap z-20 relative">
+                    <span class="w-2 h-2 bg-white rounded-full animate-pulse"></span> ÚLTIMA HORA
+                </div>
+                <div class="overflow-hidden w-full relative h-6">
+                    <div class="absolute w-full whitespace-nowrap animate-marquee flex gap-12 text-xs md:text-sm font-medium items-center h-full">
+                        <span class="hover:text-yellow-400 cursor-pointer transition">🚨 <strong>SISTEMA:</strong> Portal atualizado com nova tecnologia dinâmica.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CORPO PRINCIPAL -->
+        <main class="container mx-auto px-4 py-8">
+            <!-- BANNER MOBILE TOPO -->
+            <div class="lg:hidden mb-8 flex flex-col items-center">
+                <span class="text-[9px] text-gray-400 uppercase tracking-widest mb-1 border px-1 rounded bg-gray-50">OFERECIMENTO</span>
+                <div class="w-full shadow-sm rounded-sm overflow-hidden block relative h-[100px] bg-gray-100">
+                    <img id="banner-mobile-top" src="https://placehold.co/970x120/cc0000/ffffff?text=A+Carregar..." class="w-full h-full object-cover banner-fade absolute inset-0">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                
+                <!-- CONTEÚDO PRINCIPAL (ESQUERDA) -->
+                <section class="lg:col-span-8">
+                    
+                    <!-- VISÃO 1: CAPA DO SITE (HOME) -->
+                    <div id="view-home" class="fade-enter">
+                        <!-- DESTAQUE (HERO - Dinâmico) -->
+                        <article id="dynamic-hero" class="group cursor-pointer mb-10 relative rounded-xl overflow-hidden shadow-xl bg-gray-900 border-b-4 border-brand-red h-[350px] md:h-[500px] hidden">
+                            <!-- Injetado via JS -->
+                        </article>
+
+                        <!-- FEED DINÂMICO FIREBASE -->
+                        <div class="flex items-center justify-between border-b-2 border-gray-200 pb-2 mb-6 mt-8">
+                            <h3 class="flex items-center gap-2 text-xl font-black text-gray-800 uppercase tracking-tight"><i data-lucide="clock" class="text-brand-red w-6 h-6"></i> Últimas do Dia</h3>
+                        </div>
+                    
+                        <div id="dynamic-news-feed" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="col-span-1 md:col-span-2 text-center py-12 text-gray-400 flex flex-col items-center">
+                                <div class="w-8 h-8 border-4 border-brand-red border-t-transparent rounded-full animate-spin mb-4"></div>
+                                A sincronizar com a base de dados...
+                            </div>
+                        </div>
+
+                        <!-- BANNER FEED 1 (Estratégico) -->
+                        <div class="md:col-span-2 my-10 border-y border-gray-100 py-6 bg-gray-50/50 flex flex-col items-center">
+                            <span class="text-[9px] text-gray-400 uppercase tracking-widest mb-2 border px-1 rounded bg-white">CONTEÚDO PATROCINADO</span>
+                            <div class="hidden lg:block w-full shadow-sm relative h-[90px] bg-gray-200 rounded-sm overflow-hidden">
+                                <img id="banner-feed-1-desktop" src="https://placehold.co/728x90/eeeeee/333333?text=A+Carregar+Banner..." class="w-full h-full object-cover banner-fade absolute inset-0">
+                            </div>
+                            <div class="lg:hidden w-[300px] shadow-md relative h-[250px] bg-gray-200 rounded-md overflow-hidden">
+                                <img id="banner-feed-1-mobile" src="https://placehold.co/300x250/eeeeee/333333?text=A+Carregar+Banner..." class="w-full h-full object-cover banner-fade absolute inset-0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VISÃO 2: PÁGINA INTERNA DO ARTIGO (Lido na mesma página) -->
+                    <div id="view-article" class="hidden fade-enter">
+                        <button onclick="app.goHome()" class="mb-6 flex items-center gap-2 text-brand-blue font-bold hover:underline bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-full w-fit transition-colors">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i> Voltar à Capa
+                        </button>
+                        
+                        <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                            <div class="p-6 md:p-10">
+                                <span id="article-category" class="bg-brand-red text-white text-[10px] font-bold px-3 py-1.5 uppercase rounded shadow-sm mb-4 inline-block">Categoria</span>
+                                <h1 id="article-title" class="text-3xl md:text-5xl font-black text-gray-900 leading-tight mb-4 tracking-tight">Título da Notícia</h1>
+                                <p id="article-summary" class="text-lg text-gray-500 mb-6 font-serif italic">Resumo da notícia entra aqui.</p>
+                                
+                                <div class="flex flex-wrap items-center gap-4 text-xs text-gray-400 font-bold border-y border-gray-100 py-3 mb-8 bg-gray-50 px-4 rounded">
+                                    <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-4 h-4"></i> <span id="article-date">Data</span></span>
+                                    <span class="hidden md:block w-1 h-1 bg-gray-300 rounded-full"></span>
+                                    <span class="flex items-center gap-1 text-brand-blue"><i data-lucide="user" class="w-4 h-4"></i> <span id="article-author">Redação</span></span>
+                                </div>
+                                
+                                <img id="article-image" src="" class="w-full h-auto max-h-[500px] object-cover rounded-lg mb-10 shadow-sm" onerror="this.style.display='none'">
+                                
+                                <!-- Corpo do Texto Seguro (Apenas TextContent) -->
+                                <div id="article-content" class="font-serif text-gray-800 leading-relaxed text-lg flex flex-col gap-4">
+                                    <!-- Conteúdo injetado via JS -->
+                                </div>
+                                
+                                <!-- Partilha -->
+                                <div class="mt-12 pt-6 border-t border-gray-100 flex items-center gap-4">
+                                    <span class="text-sm font-bold text-gray-500 uppercase tracking-wider">Partilhar:</span>
+                                    <button class="bg-green-500 hover:bg-green-600 text-white p-2 rounded-full transition shadow-md"><i data-lucide="message-circle" class="w-5 h-5"></i></button>
+                                    <button class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full transition shadow-md"><i data-lucide="facebook" class="w-5 h-5"></i></button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                </section>
+
+                <!-- BARRA LATERAL (BANNERS) -->
+                <aside class="lg:col-span-4 space-y-10 lg:pl-6 lg:border-l lg:border-gray-200">
+                    <div class="sticky top-32 space-y-8">
+                        <div class="bg-white p-3 rounded-xl border border-gray-100 shadow-lg text-center hidden md:block">
+                            <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-2">Parceiro Oficial</p>
+                            <div class="block mb-3 relative h-[600px] overflow-hidden rounded bg-gray-100">
+                                <img id="banner-sidebar-sticky" src="https://placehold.co/300x600/eeeeee/333333?text=A+Carregar..." class="w-full h-full object-cover banner-fade absolute inset-0" loading="lazy">
+                            </div>
+                        </div>
+
+                        <div class="lg:hidden">
+                            <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-2 text-center">Parceiro Destaque</p>
+                            <div class="w-full shadow-lg relative h-[250px] overflow-hidden bg-gray-200 rounded-md border border-gray-200">
+                                <img id="banner-feed-mobile-extra" src="https://placehold.co/300x250/eeeeee/333333?text=A+Carregar..." class="w-full h-full object-cover banner-fade absolute inset-0">
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </main>
+
+        <footer class="bg-[#111] text-gray-400 py-12 text-center text-sm border-t-4 border-brand-red mt-12 relative">
+            <p>&copy; 2026 JOÃO ALENCAR.</p>
+            <!-- BOTÃO INVISÍVEL PARA JORNALISTAS (SEGREDO) -->
+            <button onclick="app.toggleLoginModal(true)" class="absolute bottom-4 right-4 opacity-0 hover:opacity-20 transition-opacity w-10 h-10 flex items-center justify-center rounded-full" title="Acesso Reservado">
+                <i data-lucide="lock" class="w-5 h-5 text-white"></i>
+            </button>
+        </footer>
+
+        <!-- NAV MOBILE APP -->
+        <div class="glass-effect fixed bottom-0 left-0 w-full border-t border-gray-200 flex lg:hidden justify-between px-6 items-center h-16 z-40 pb-safe shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+            <a href="#" onclick="app.goHome(); return false;" class="text-brand-red flex flex-col items-center"><i data-lucide="home" class="w-6 h-6"></i><span class="text-[10px]">Capa</span></a>
+            <div class="relative -top-6"><a href="#" class="bg-brand-red text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg"><i data-lucide="play" class="w-6 h-6 ml-1 fill-current"></i></a></div>
+            <button id="menu-mobile-trigger" class="text-gray-400 flex flex-col items-center"><i data-lucide="menu" class="w-6 h-6"></i><span class="text-[10px]">Menu</span></button>
         </div>
     </div>
 
-    <!-- 2. HEADER PRINCIPAL -->
-    <header class="bg-white shadow-md sticky top-0 z-40 border-t-4 border-brand-blue">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-20 md:h-28">
-                
-                <!-- LOGO -->
-                <a href="#" class="flex flex-col leading-none select-none group" aria-label="Ir para Início">
-                    <div class="flex items-baseline gap-1 group-hover:scale-[1.02] transition-transform origin-left">
-                        <span class="text-4xl md:text-5xl font-black text-brand-blue tracking-tighter italic">JOÃO</span>
-                        <span class="text-4xl md:text-5xl font-black text-brand-red tracking-tighter italic">ALENCAR</span>
-                    </div>
-                    <div class="flex items-center gap-2 mt-1">
-                        <span class="h-0.5 w-8 bg-yellow-500 hidden md:block"></span>
-                        <span class="text-[10px] md:text-sm font-bold uppercase tracking-[0.3em] text-gray-400 group-hover:text-brand-red transition-colors">
-                            Olho da Notícia
-                        </span>
-                    </div>
-                </a>
-
-                <!-- BANNER TOPO ROTATIVO (Desktop - Largo) -->
-                <div class="hidden lg:block w-[728px] h-[90px] relative group overflow-hidden bg-gray-100 rounded border border-gray-200">
-                    <span class="absolute top-0 right-0 text-[8px] text-gray-400 bg-white px-1 z-10 border-b border-l">PUBLICIDADE</span>
-                    <a href="#" class="block w-full h-full">
-                        <img id="banner-desktop-top" 
-                             src="https://placehold.co/970x120/cc0000/ffffff?text=1/3+MADEIREIRA+PITOMBEIRA&font=roboto" 
-                             alt="Publicidade Topo" 
-                             class="w-full h-full object-cover banner-fade"
-                             loading="eager">
-                    </a>
+    <!-- ========================================== -->
+    <!-- SISTEMA DE LOGIN SIMPLIFICADO (MODAL)      -->
+    <!-- ========================================== -->
+    <div id="login-modal" class="fixed inset-0 z-[60] flex items-center justify-center glass-dark opacity-0 invisible transition-all duration-300">
+        <div class="bg-white w-full max-w-md p-8 rounded-2xl shadow-2xl mx-4 relative transform scale-95 transition-transform duration-300" id="login-box">
+            <button onclick="app.toggleLoginModal(false)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div class="text-center mb-8 mt-2">
+                <i data-lucide="shield-check" class="w-12 h-12 text-brand-blue mx-auto mb-3"></i>
+                <h3 class="text-xl font-bold text-gray-800">Acesso Editor</h3>
+                <p class="text-sm text-gray-500">Inicie sessão para gerir o portal</p>
+            </div>
+            <form id="auth-form" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nome de Utilizador</label>
+                    <input type="text" id="auth-user" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand-blue outline-none" required placeholder="Ex: joaoalencar">
                 </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Palavra-passe</label>
+                    <input type="password" id="auth-pass" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand-blue outline-none" required placeholder="••••••••">
+                </div>
+                <button type="submit" id="auth-submit-btn" class="w-full bg-brand-blue hover:bg-blue-800 text-white font-bold py-3 rounded-lg shadow-lg transition mt-4">
+                    Entrar Seguramente
+                </button>
+            </form>
+        </div>
+    </div>
 
-                <!-- BOTÃO MENU MOBILE -->
-                <button id="menu-open-btn" class="lg:hidden p-2 text-brand-blue hover:bg-blue-50 rounded-md transition-colors" aria-label="Abrir Menu">
-                    <i data-lucide="menu" class="w-8 h-8"></i>
+    <!-- BOTÃO FLUTUANTE ADMIN -->
+    <button onclick="app.openAdminPanel()" id="fab-admin" class="fixed bottom-24 right-6 z-40 bg-brand-dark text-white p-4 rounded-full shadow-2xl hover:bg-brand-blue transition-all hidden group flex items-center gap-3 border-2 border-white/20 backdrop-blur-sm">
+        <i data-lucide="pen-tool" class="w-6 h-6 animate-[spin_4s_linear_infinite]"></i>
+        <span class="font-bold text-sm max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 whitespace-nowrap opacity-0 group-hover:opacity-100 pr-0 group-hover:pr-2">Modo Editor</span>
+    </button>
+
+    <!-- ========================================== -->
+    <!-- PAINEL DE ADMINISTRAÇÃO (OVERLAY)          -->
+    <!-- ========================================== -->
+    <div id="admin-overlay" class="fixed inset-0 z-[100] bg-gray-100 transform translate-x-full transition-transform duration-500 flex flex-col md:flex-row shadow-2xl">
+        
+        <!-- SIDEBAR ADMIN -->
+        <aside class="w-full md:w-64 bg-brand-dark text-white flex flex-col shrink-0">
+            <div class="p-4 md:p-6 border-b border-gray-800 flex items-center justify-between">
+                <div>
+                    <span class="block font-black italic text-lg">REDAÇÃO ONLINE</span>
+                </div>
+                <button onclick="app.closeAdminPanel()" class="bg-gray-800 hover:bg-gray-700 p-2 rounded-lg transition text-xs font-bold flex items-center gap-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Ver Site
                 </button>
             </div>
-        </div>
-
-        <!-- NAVEGAÇÃO DESKTOP -->
-        <nav class="bg-brand-blue text-white hidden lg:block shadow-inner relative z-30">
-            <div class="container mx-auto px-4">
-                <ul class="flex items-center font-bold text-sm uppercase tracking-wider">
-                    <li class="bg-brand-red hover:bg-red-600 transition-colors shadow-lg z-10 relative overflow-hidden group">
-                        <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                        <a href="#" class="px-6 py-4 flex items-center gap-2 block h-full w-full relative z-10">
-                            <i data-lucide="home" class="w-4 h-4"></i> CAPA
-                        </a>
-                    </li>
-                    <li class="hover:bg-white/10 transition-colors border-r border-white/5 relative group">
-                        <a href="#" class="px-5 py-4 block relative z-10">POLICIAL</a>
-                        <span class="absolute bottom-0 left-0 w-full h-1 bg-red-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                    </li>
-                    <li class="hover:bg-white/10 transition-colors border-r border-white/5 relative group">
-                        <a href="#" class="px-5 py-4 block relative z-10">POLÍTICA</a>
-                        <span class="absolute bottom-0 left-0 w-full h-1 bg-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                    </li>
-                    <li class="hover:bg-white/10 transition-colors border-r border-white/5 relative group">
-                        <a href="#" class="px-5 py-4 block relative z-10">COTIDIANO</a>
-                        <span class="absolute bottom-0 left-0 w-full h-1 bg-green-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                    </li>
-                    <li class="hover:bg-white/10 transition-colors border-r border-white/5 relative group">
-                        <a href="#" class="px-5 py-4 block relative z-10">ESPORTES</a>
-                        <span class="absolute bottom-0 left-0 w-full h-1 bg-yellow-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                    </li>
-                    <li class="hover:bg-white/10 transition-colors border-r border-white/5 relative group">
-                        <a href="#" class="px-5 py-4 block relative z-10">REGIÃO</a>
-                        <span class="absolute bottom-0 left-0 w-full h-1 bg-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                    </li>
-                    <li class="ml-auto bg-yellow-500 text-brand-blue hover:bg-yellow-400 hover:text-black transition font-black shadow-lg">
-                        <a href="#" class="px-6 py-4 flex items-center gap-2">
-                            <i data-lucide="video" class="w-5 h-5"></i> ASSISTA AO VIVO
-                        </a>
-                    </li>
-                </ul>
+            <nav class="flex-1 overflow-y-auto custom-scroll py-6 px-3 space-y-1">
+                <button onclick="app.switchAdminTab('news')" id="nav-news" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium bg-brand-blue text-white shadow-lg">
+                    <i data-lucide="pen-tool" class="w-5 h-5"></i> Redação
+                </button>
+                <button onclick="app.switchAdminTab('banners')" id="nav-banners" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800 transition">
+                    <i data-lucide="megaphone" class="w-5 h-5"></i> Gestão de Banners
+                </button>
+            </nav>
+            <div class="p-4 border-t border-gray-800">
+                <button onclick="app.logoutAdmin()" class="flex items-center gap-2 text-sm text-red-400 hover:text-red-300 w-full px-2 py-2 font-bold">
+                    <i data-lucide="log-out" class="w-4 h-4"></i> Terminar Sessão
+                </button>
             </div>
-        </nav>
-    </header>
+        </aside>
 
-    <!-- MENU MOBILE (OVERLAY) -->
-    <div id="mobile-menu-overlay" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity opacity-0 invisible" aria-hidden="true">
-        <div id="mobile-menu-panel" class="fixed top-0 left-0 w-[85%] max-w-[320px] h-full bg-white shadow-2xl transition-transform duration-300 -translate-x-full flex flex-col">
-            <div class="p-5 bg-brand-blue text-white flex justify-between items-center shadow-md shrink-0">
-                <div class="font-black text-xl italic">JOÃO ALENCAR</div>
-                <button id="menu-close-btn" class="p-1 hover:bg-white/10 rounded transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
-            </div>
-            <div class="overflow-y-auto h-full pb-20">
-                <div class="p-4 bg-gray-50 border-b border-gray-100 sticky top-0 z-10">
-                    <form action="#" class="relative group">
-                        <input type="text" placeholder="Buscar notícia..." class="w-full pl-10 pr-4 py-3 bg-white rounded-lg border border-gray-200 focus:border-brand-red outline-none text-sm shadow-sm transition-all group-focus-within:ring-2 ring-red-100">
-                        <i data-lucide="search" class="absolute left-3 top-3.5 text-gray-400 w-4 h-4"></i>
-                    </form>
+        <!-- CONTEÚDO ADMIN -->
+        <main class="flex-1 flex flex-col min-w-0 bg-gray-50 h-screen overflow-y-auto custom-scroll">
+            <header class="bg-white border-b border-gray-200 h-16 flex items-center justify-between px-6 shadow-sm sticky top-0 z-10">
+                <h2 class="text-xl font-bold text-gray-800" id="admin-page-title">Redação Central</h2>
+                <div class="text-xs font-bold text-gray-400 bg-gray-100 px-3 py-1 rounded-full uppercase tracking-widest hidden md:block">Ambiente Seguro</div>
+            </header>
+
+            <div class="p-4 md:p-8">
+                
+                <!-- GUIA: NOTÍCIAS -->
+                <div id="view-news" class="space-y-6 fade-enter">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-800 mb-6 border-b pb-2 flex items-center gap-2"><i data-lucide="edit-3" class="w-5 h-5 text-brand-blue"></i> Editor de Artigos</h3>
+                        <form onsubmit="event.preventDefault(); app.saveNews();" class="space-y-5">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Manchete (Título Principal)</label>
+                                <input type="text" id="news-title" class="w-full px-4 py-3 text-lg font-bold rounded-lg border border-gray-300 focus:border-brand-blue outline-none" required placeholder="Escreva um título forte...">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Editoria</label>
+                                    <select id="news-category" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-brand-blue outline-none bg-white font-medium">
+                                        <option value="Policial">Policial</option>
+                                        <option value="Política">Política</option>
+                                        <option value="Cotidiano">Quotidiano</option>
+                                        <option value="Esportes">Desportos</option>
+                                        <option value="Região">Região</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Repórter (Autor)</label>
+                                    <input type="text" id="news-author" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-brand-blue outline-none" placeholder="Ex: João Alencar" required>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Link Imagem de Capa</label>
+                                    <input type="text" id="news-image" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-brand-blue outline-none" placeholder="https://..." required>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Linha Fina (Resumo para Capa)</label>
+                                <textarea id="news-summary" class="w-full h-16 px-4 py-3 rounded-lg border border-gray-300 focus:border-brand-blue outline-none resize-none text-gray-600" required placeholder="Aparece abaixo do título na capa do site..."></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Corpo da Notícia (Matéria Completa)</label>
+                                <textarea id="news-content" class="w-full h-40 px-4 py-3 rounded-lg border border-gray-300 focus:border-brand-blue outline-none resize-none font-serif leading-relaxed text-gray-800" required placeholder="Escreva a notícia completa aqui. Pode separar por parágrafos dando 'Enter'..."></textarea>
+                            </div>
+                            <div class="flex justify-end pt-2">
+                                <button type="submit" id="btn-publish-news" class="bg-brand-blue hover:bg-blue-800 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition flex items-center gap-2">
+                                    <i data-lucide="send" class="w-4 h-4"></i> Publicar Artigo
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+                            <h3 class="font-bold text-gray-800 flex items-center gap-2"><i data-lucide="archive" class="w-4 h-4 text-brand-red"></i> Acervo de Publicações</h3>
+                        </div>
+                        <div id="admin-news-list" class="divide-y divide-gray-100 max-h-[400px] overflow-y-auto custom-scroll">
+                            <div class="p-6 text-center text-gray-400 text-sm">A ler base de dados...</div>
+                        </div>
+                    </div>
                 </div>
-                <ul class="py-2">
-                    <li class="px-4 py-3 font-bold text-gray-400 text-[10px] uppercase tracking-widest">Editorias</li>
-                    <li><a href="#" class="block px-5 py-3 text-gray-800 font-bold border-b border-gray-50 hover:bg-gray-50 hover:text-brand-red hover:pl-7 transition-all flex items-center justify-between">Policial <span class="w-2 h-2 rounded-full bg-red-700"></span></a></li>
-                    <li><a href="#" class="block px-5 py-3 text-gray-800 font-bold border-b border-gray-50 hover:bg-gray-50 hover:text-brand-blue hover:pl-7 transition-all flex items-center justify-between">Política <span class="w-2 h-2 rounded-full bg-blue-900"></span></a></li>
-                    <li><a href="#" class="block px-5 py-3 text-gray-800 font-bold border-b border-gray-50 hover:bg-gray-50 hover:text-green-700 hover:pl-7 transition-all flex items-center justify-between">Cotidiano <span class="w-2 h-2 rounded-full bg-green-700"></span></a></li>
-                    <li><a href="#" class="block px-5 py-3 text-gray-800 font-bold border-b border-gray-50 hover:bg-gray-50 hover:text-yellow-600 hover:pl-7 transition-all flex items-center justify-between">Esportes <span class="w-2 h-2 rounded-full bg-yellow-600"></span></a></li>
-                    <li><a href="#" class="block px-5 py-3 text-gray-800 font-bold border-b border-gray-50 hover:bg-gray-50 hover:text-purple-700 hover:pl-7 transition-all flex items-center justify-between">Região <span class="w-2 h-2 rounded-full bg-purple-700"></span></a></li>
-                </ul>
+
+                <!-- GUIA: BANNERS -->
+                <div id="view-banners" class="hidden space-y-6 fade-enter">
+                    <div class="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                        <i data-lucide="cloud" class="w-4 h-4"></i>
+                        Coloque os links das imagens (JPG/PNG). Se colocar mais de um link por espaço, eles rodam a cada 3 segundos.
+                    </div>
+
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h3 class="font-bold text-gray-800 mb-2">Banner Topo (Largo)</h3>
+                            <p class="text-[10px] text-gray-400 mb-4 uppercase font-bold">Ideal: 728x90px ou 970x120px</p>
+                            <div class="space-y-3">
+                                <input type="text" id="input-desktop-1" class="w-full px-3 py-2 text-sm border rounded" placeholder="Imagem 1">
+                                <input type="text" id="input-desktop-2" class="w-full px-3 py-2 text-sm border rounded" placeholder="Imagem 2 (Roda a cada 3s)">
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h3 class="font-bold text-gray-800 mb-2">Banner Barra Lateral (Sticky)</h3>
+                            <p class="text-[10px] text-gray-400 mb-4 uppercase font-bold">Ideal: 300x600px (Arranha-céus)</p>
+                            <div class="space-y-3">
+                                <input type="text" id="input-sidebar-1" class="w-full px-3 py-2 text-sm border rounded" placeholder="Imagem 1">
+                                <input type="text" id="input-sidebar-2" class="w-full px-3 py-2 text-sm border rounded" placeholder="Imagem 2">
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 xl:col-span-2">
+                            <h3 class="font-bold text-gray-800 mb-2">Banner Meio das Notícias (Feed 1)</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-[10px] text-brand-blue mb-2 uppercase font-bold">Versão PC (Largo 728x90)</p>
+                                    <input type="text" id="input-feed1-desktop" class="w-full px-3 py-2 text-sm border rounded" placeholder="Imagem PC">
+                                </div>
+                                <div>
+                                    <p class="text-[10px] text-brand-red mb-2 uppercase font-bold">Versão Telemóvel (Quadrado 300x250)</p>
+                                    <input type="text" id="input-feed1-mobile" class="w-full px-3 py-2 text-sm border rounded" placeholder="Imagem Telemóvel">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end pt-4 border-t">
+                        <button onclick="app.saveBanners()" class="bg-brand-blue hover:bg-blue-800 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition flex items-center gap-2">
+                            <i data-lucide="save" class="w-4 h-4"></i> Guardar Todos os Banners
+                        </button>
+                    </div>
+                </div>
+
             </div>
-        </div>
+        </main>
     </div>
 
-    <!-- PLANTÃO -->
-    <div class="bg-black text-white border-b-4 border-yellow-500 relative z-20 shadow-lg overflow-hidden">
-        <div class="container mx-auto px-4 py-2 flex items-center">
-            <div class="bg-brand-red text-white text-[10px] md:text-xs font-black uppercase px-3 py-1 rounded mr-3 shadow-md flex items-center gap-2 whitespace-nowrap z-20 relative">
-                <span class="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-                PLANTÃO
-            </div>
-            <div class="overflow-hidden w-full relative h-6">
-                <div class="absolute w-full whitespace-nowrap animate-marquee flex gap-12 text-xs md:text-sm font-medium items-center h-full">
-                    <span class="hover:text-yellow-400 cursor-pointer transition">🚨 <strong>POLÍCIA:</strong> Operação prende suspeitos na zona rural de Sousa.</span>
-                    <span class="hover:text-yellow-400 cursor-pointer transition">🌧️ <strong>CLIMA:</strong> Defesa Civil emite alerta laranja de chuvas para o sertão.</span>
-                    <span class="hover:text-yellow-400 cursor-pointer transition">⚽ <strong>ESPORTE:</strong> Sousa vence amistoso preparatório por 2x0.</span>
-                    <span class="hover:text-yellow-400 cursor-pointer transition">🚨 <strong>POLÍCIA:</strong> Operação prende suspeitos na zona rural de Sousa.</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT & FIREBASE                      -->
+    <!-- ========================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="container mx-auto px-4 py-8">
+        // 1. CONFIGURAÇÕES FIREBASE
+        const defaultFirebaseConfig = {
+            apiKey: "AIzaSyBnkQXto5Jb0Epe3JRf-6TxakS6XOy3SZk",
+            authDomain: "portal-joao-alencar.firebaseapp.com",
+            projectId: "portal-joao-alencar",
+            storageBucket: "portal-joao-alencar.firebasestorage.app",
+            messagingSenderId: "24929127180",
+            appId: "1:24929127180:web:56384f8f4fc44f817c1729"
+        };
         
-        <!-- BANNER MOBILE TOPO ROTATIVO (Retangular no Topo é Padrão) -->
-        <div class="lg:hidden mb-8">
-            <div class="flex flex-col items-center">
-                <span class="text-[9px] text-gray-400 uppercase tracking-widest mb-1 border px-1 rounded bg-gray-50">OFERECIMENTO</span>
-                <a href="#" class="w-full shadow-sm rounded-sm overflow-hidden block relative h-[100px] bg-gray-100">
-                    <img id="banner-mobile-top" 
-                         src="https://placehold.co/970x120/cc0000/ffffff?text=1/3+MADEIREIRA+PITOMBEIRA&font=roboto" 
-                         alt="Banner Mobile" 
-                         class="w-full h-full object-cover banner-fade absolute inset-0">
-                </a>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            
-            <!-- --- COLUNA ESQUERDA: FEED (8 Colunas) --- -->
-            <section class="lg:col-span-8">
-                
-                <!-- MANCHETE PRINCIPAL (HERO) -->
-                <article class="group cursor-pointer mb-10 relative rounded-xl overflow-hidden shadow-xl bg-gray-900 border-b-4 border-brand-red h-[350px] md:h-[500px]">
-                    <a href="#" class="block h-full relative">
-                        <div class="absolute inset-0 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1548543666-4d04838b0870?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000 ease-out" loading="eager">
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
-                        <div class="absolute top-4 left-4 z-10"><span class="bg-brand-red text-white text-xs font-black px-4 py-1.5 uppercase shadow-md rounded tracking-wider">POLICIAL</span></div>
-                        <div class="absolute bottom-0 left-0 w-full p-5 md:p-8 text-white z-10">
-                            <h2 class="text-2xl md:text-4xl lg:text-5xl font-black leading-tight mb-4 drop-shadow-lg group-hover:text-yellow-400 transition-colors font-sans">
-                                Operação Impacto: Polícia Militar apreende armas e drogas na zona rural de Sousa
-                            </h2>
-                            <div class="flex flex-wrap items-center text-xs md:text-sm text-gray-300 gap-4 md:gap-6 font-medium mb-6">
-                                <span class="flex items-center gap-1.5"><i data-lucide="user" class="w-3 h-3 text-brand-red"></i> Por Redação</span>
-                                <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-3 h-3 text-brand-red"></i> Há 15 min</span>
-                                <span class="bg-brand-red text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase animate-pulse">Urgente</span>
-                            </div>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- TV OLHO DA NOTÍCIA -->
-                <div class="bg-gray-900 rounded-xl overflow-hidden shadow-lg mb-10 border border-gray-800">
-                    <div class="bg-brand-red px-6 py-3 flex items-center justify-between">
-                        <h3 class="text-white font-black uppercase flex items-center gap-2 tracking-widest text-sm md:text-base"><i data-lucide="play-circle" class="fill-white text-brand-red"></i> TV Olho da Notícia</h3>
-                        <span class="text-white/80 text-xs font-bold flex items-center gap-1 animate-pulse"><div class="w-2 h-2 bg-red-400 rounded-full"></div> AO VIVO</span>
-                    </div>
-                    <div class="grid md:grid-cols-2">
-                        <div class="relative aspect-video md:aspect-auto group cursor-pointer overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1519692933481-e162a57d6721?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition" alt="Vídeo">
-                            <div class="absolute inset-0 flex items-center justify-center"><i data-lucide="play-circle" class="w-16 h-16 text-white drop-shadow-lg group-hover:scale-110 transition opacity-90"></i></div>
-                        </div>
-                        <div class="p-6 text-white flex flex-col justify-center">
-                            <span class="text-red-500 font-bold text-xs uppercase mb-2">Vídeo Destaque</span>
-                            <a href="#"><h4 class="text-xl font-bold leading-tight mb-3 hover:text-red-400 cursor-pointer transition">VÍDEO: Chuva forte causa alagamento na Avenida Principal; veja imagens</h4></a>
-                            <p class="text-gray-400 text-sm line-clamp-3 mb-4">Moradores registraram o momento em que a água invadiu estabelecimentos comerciais.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FEED DE NOTÍCIAS -->
-                <div class="flex items-center justify-between border-b-2 border-gray-200 pb-2 mb-6 mt-8">
-                    <h3 class="flex items-center gap-2 text-xl font-black text-gray-800 uppercase tracking-tight"><i data-lucide="clock" class="text-brand-red w-6 h-6"></i> Últimas do Dia</h3>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    
-                    <!-- Notícia 1 -->
-                    <article class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
-                        <a href="#" class="flex flex-col h-full">
-                            <div class="h-52 overflow-hidden relative">
-                                <img src="https://images.unsplash.com/photo-1575320181282-9afab399332c?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                <span class="absolute top-3 left-3 bg-blue-900 text-white text-[10px] font-bold px-2 py-1 uppercase rounded shadow-sm">POLÍTICA</span>
-                            </div>
-                            <div class="p-5 flex flex-col flex-grow">
-                                <h3 class="font-bold text-lg leading-snug text-gray-800 mb-3 group-hover:text-brand-red transition-colors">Câmara de Sousa aprova projeto de lei que isenta impostos no centro comercial</h3>
-                                <div class="flex items-center justify-between pt-4 border-t border-gray-50 mt-auto"><span class="text-xs text-gray-400 font-bold flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> Há 1 hora</span></div>
-                            </div>
-                        </a>
-                    </article>
-
-                    <!-- === ÁREA DE BANNER FEED 1 (Estratégico) === -->
-                    <div class="md:col-span-2 my-2 border-y border-gray-100 py-6 bg-gray-50/50">
-                        <div class="flex flex-col items-center max-w-2xl mx-auto">
-                            <span class="text-[9px] text-gray-400 uppercase tracking-widest mb-2 border px-1 rounded bg-white">CONTEÚDO PATROCINADO</span>
-                            
-                            <!-- VERSÃO DESKTOP (Largo) -->
-                            <a href="#" class="hidden lg:block transition-transform hover:scale-[1.01] duration-300 w-full shadow-sm relative h-[90px] overflow-hidden bg-gray-200 rounded-sm">
-                                <img id="banner-feed-1-desktop" 
-                                     src="https://placehold.co/728x90/eeeeee/333333?text=1/3+INTERNET+FIBRA+DESKTOP&font=roboto" 
-                                     alt="Publicidade Feed 1 Desktop" 
-                                     class="w-full h-full object-cover banner-fade absolute inset-0">
-                            </a>
-
-                            <!-- VERSÃO MOBILE (Quadrado/Estratégico 300x250) -->
-                            <a href="#" class="lg:hidden transition-transform hover:scale-[1.01] duration-300 w-[300px] shadow-md relative h-[250px] overflow-hidden bg-gray-200 rounded-md">
-                                <img id="banner-feed-1-mobile" 
-                                     src="https://placehold.co/300x250/eeeeee/333333?text=1/3+OFERTA+MOBILE+EXCLUSIVA&font=roboto" 
-                                     alt="Publicidade Feed 1 Mobile" 
-                                     class="w-full h-full object-cover banner-fade absolute inset-0">
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Notícia 2 -->
-                    <article class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
-                        <a href="#" class="flex flex-col h-full">
-                            <div class="h-52 overflow-hidden relative">
-                                <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                <span class="absolute top-3 left-3 bg-yellow-600 text-white text-[10px] font-bold px-2 py-1 uppercase rounded shadow-sm">ESPORTES</span>
-                            </div>
-                            <div class="p-5 flex flex-col flex-grow">
-                                <h3 class="font-bold text-lg leading-snug text-gray-800 mb-3 group-hover:text-brand-red transition-colors">Sousa EC anuncia novo reforço para o Campeonato Paraibano</h3>
-                                <div class="flex items-center justify-between pt-4 border-t border-gray-50 mt-auto"><span class="text-xs text-gray-400 font-bold flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> Há 3 horas</span></div>
-                            </div>
-                        </a>
-                    </article>
-
-                    <!-- Notícia 3 -->
-                    <article class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
-                        <a href="#" class="flex flex-col h-full">
-                            <div class="h-52 overflow-hidden relative">
-                                <img src="https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                <span class="absolute top-3 left-3 bg-green-700 text-white text-[10px] font-bold px-2 py-1 uppercase rounded shadow-sm">COTIDIANO</span>
-                            </div>
-                            <div class="p-5 flex flex-col flex-grow">
-                                <h3 class="font-bold text-lg leading-snug text-gray-800 mb-3 group-hover:text-brand-red transition-colors">Feira livre de Sousa terá horário especial durante o feriado</h3>
-                                <div class="flex items-center justify-between pt-4 border-t border-gray-50 mt-auto"><span class="text-xs text-gray-400 font-bold flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> Há 5 horas</span></div>
-                            </div>
-                        </a>
-                    </article>
-
-                    <!-- === ÁREA DE BANNER FEED 2 (Central) === -->
-                    <div class="md:col-span-2 my-6">
-                         <div class="flex flex-col items-center max-w-2xl mx-auto">
-                            <span class="text-[9px] text-gray-400 uppercase tracking-widest mb-1 border px-1 rounded bg-white">PUBLICIDADE</span>
-                            
-                            <!-- VERSÃO DESKTOP (Largo) -->
-                            <a href="#" class="hidden lg:block transition-transform hover:scale-[1.01] duration-300 w-full shadow-md relative h-[90px] overflow-hidden bg-gray-200 rounded-sm">
-                                <img id="banner-feed-2-desktop" 
-                                     src="https://placehold.co/728x90/004d40/ffffff?text=1/3+FARMÁCIA+SANTA+MARIA&font=roboto" 
-                                     alt="Publicidade Feed 2 Desktop" 
-                                     class="w-full h-full object-cover banner-fade absolute inset-0">
-                            </a>
-
-                             <!-- VERSÃO MOBILE (Quadrado 300x250) -->
-                             <a href="#" class="lg:hidden transition-transform hover:scale-[1.01] duration-300 w-[300px] shadow-md relative h-[250px] overflow-hidden bg-gray-200 rounded-md">
-                                <img id="banner-feed-2-mobile" 
-                                     src="https://placehold.co/300x250/004d40/ffffff?text=1/3+PROMOÇÃO+FARMÁCIA&font=roboto" 
-                                     alt="Publicidade Feed 2 Mobile" 
-                                     class="w-full h-full object-cover banner-fade absolute inset-0">
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Notícia 4 -->
-                    <article class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
-                        <a href="#" class="flex flex-col h-full">
-                            <div class="h-52 overflow-hidden relative">
-                                <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                <span class="absolute top-3 left-3 bg-purple-700 text-white text-[10px] font-bold px-2 py-1 uppercase rounded shadow-sm">REGIÃO</span>
-                            </div>
-                            <div class="p-5 flex flex-col flex-grow">
-                                <h3 class="font-bold text-lg leading-snug text-gray-800 mb-3 group-hover:text-brand-red transition-colors">Prefeitura inaugura nova UBS no bairro São Francisco</h3>
-                            </div>
-                        </a>
-                    </article>
-
-                    <!-- Notícia 5 -->
-                    <article class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
-                        <a href="#" class="flex flex-col h-full">
-                            <div class="h-52 overflow-hidden relative">
-                                <img src="https://images.unsplash.com/photo-1464052964923-d64e0d9b4334?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                <span class="absolute top-3 left-3 bg-brand-red text-white text-[10px] font-bold px-2 py-1 uppercase rounded shadow-sm">POLICIAL</span>
-                            </div>
-                            <div class="p-5 flex flex-col flex-grow">
-                                <h3 class="font-bold text-lg leading-snug text-gray-800 mb-3 group-hover:text-brand-red transition-colors">Homem é detido com moto roubada em blitz na saída para Cajazeiras</h3>
-                            </div>
-                        </a>
-                    </article>
-
-                    <!-- Notícia 6 -->
-                    <article class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
-                        <a href="#" class="flex flex-col h-full">
-                            <div class="h-52 overflow-hidden relative">
-                                <img src="https://images.unsplash.com/photo-1563836104-5198bc7b3988?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                <span class="absolute top-3 left-3 bg-slate-600 text-white text-[10px] font-bold px-2 py-1 uppercase rounded shadow-sm">ECONOMIA</span>
-                            </div>
-                            <div class="p-5 flex flex-col flex-grow">
-                                <h3 class="font-bold text-lg leading-snug text-gray-800 mb-3 group-hover:text-brand-red transition-colors">Preço da gasolina sofre novo reajuste nos postos do sertão</h3>
-                            </div>
-                        </a>
-                    </article>
-                    
-                    <!-- === BANNER EXTRA MOBILE (Substitui Sidebar Sticky) === -->
-                    <div class="lg:hidden md:col-span-2 my-6">
-                        <div class="flex flex-col items-center">
-                            <span class="text-[9px] text-gray-400 uppercase tracking-widest mb-1 border px-1 rounded bg-white">PARCEIRO DESTAQUE</span>
-                            <a href="#" class="transition-transform hover:scale-[1.01] duration-300 w-[300px] shadow-lg relative h-[250px] overflow-hidden bg-gray-200 rounded-md border-2 border-brand-yellow">
-                                <img id="banner-feed-mobile-extra" 
-                                     src="https://placehold.co/300x250/ffcc00/000000?text=1/3+CONSTRUTORA+FUTURO&font=roboto" 
-                                     alt="Publicidade Extra Mobile" 
-                                     class="w-full h-full object-cover banner-fade absolute inset-0">
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- --- COLUNA DIREITA: SIDEBAR --- -->
-            <aside class="lg:col-span-4 space-y-10 lg:pl-6 lg:border-l lg:border-gray-200">
-                
-                <!-- REDES SOCIAIS -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 text-center relative overflow-hidden group">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-blue via-brand-red to-brand-yellow"></div>
-                    <h4 class="font-black text-gray-900 uppercase mb-2 tracking-wide text-sm">Comunidade João Alencar</h4>
-                    <p class="text-xs text-gray-500 mb-6 font-serif italic">Junte-se a mais de 50 mil seguidores</p>
-                    <div class="flex justify-center gap-3">
-                        <a href="#" class="bg-gradient-to-br from-purple-600 to-pink-600 text-white w-10 h-10 flex items-center justify-center rounded-full hover:scale-110 transition"><i data-lucide="instagram" class="w-4 h-4"></i></a>
-                        <a href="#" class="bg-blue-700 text-white w-10 h-10 flex items-center justify-center rounded-full hover:scale-110 transition"><i data-lucide="facebook" class="w-4 h-4"></i></a>
-                        <a href="#" class="bg-red-600 text-white w-10 h-10 flex items-center justify-center rounded-full hover:scale-110 transition"><i data-lucide="youtube" class="w-4 h-4"></i></a>
-                    </div>
-                </div>
-
-                <!-- MAIS LIDAS -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div class="bg-brand-blue text-white px-5 py-3 font-bold uppercase text-xs tracking-widest flex items-center justify-between">
-                        <span>Top Notícias</span>
-                        <span class="text-yellow-400 text-[10px] animate-pulse">DA SEMANA</span>
-                    </div>
-                    <div class="divide-y divide-gray-50">
-                        <a href="#" class="flex items-start gap-4 p-4 hover:bg-red-50 transition group">
-                            <span class="text-3xl font-black text-gray-200 group-hover:text-red-600 font-serif leading-none mt-1 transition-colors">01</span>
-                            <div><span class="text-[9px] font-bold text-brand-red uppercase block mb-1 tracking-wider">Policial</span><h5 class="text-sm font-bold text-gray-800 leading-snug group-hover:text-brand-red transition-colors font-serif">Acidente na BR-230 deixa trânsito lento próximo à entrada da cidade.</h5></div>
-                        </a>
-                        <a href="#" class="flex items-start gap-4 p-4 hover:bg-red-50 transition group">
-                            <span class="text-3xl font-black text-gray-200 group-hover:text-red-600 font-serif leading-none mt-1 transition-colors">02</span>
-                            <div><span class="text-[9px] font-bold text-blue-900 uppercase block mb-1 tracking-wider">Política</span><h5 class="text-sm font-bold text-gray-800 leading-snug group-hover:text-brand-red transition-colors font-serif">Prefeito anuncia calçamento de novas ruas no bairro da Estação.</h5></div>
-                        </a>
-                        <a href="#" class="flex items-start gap-4 p-4 hover:bg-red-50 transition group">
-                            <span class="text-3xl font-black text-gray-200 group-hover:text-red-600 font-serif leading-none mt-1 transition-colors">03</span>
-                            <div><span class="text-[9px] font-bold text-green-700 uppercase block mb-1 tracking-wider">Cotidiano</span><h5 class="text-sm font-bold text-gray-800 leading-snug group-hover:text-brand-red transition-colors font-serif">Inauguração de nova escola reúne autoridades e comunidade.</h5></div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- BANNER ROTATIVO STICKY (LADO DIREITO - FIXO NA ROLAGEM) -->
-                <!-- BANNER 4 de 4 -->
-                <div class="sticky top-32">
-                    <div class="bg-white p-3 rounded-xl border border-gray-100 shadow-lg text-center">
-                        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-2">Parceiro Oficial</p>
-                        <a href="#" class="block mb-3 relative h-[400px] overflow-hidden rounded bg-gray-100">
-                            <img id="banner-sidebar-sticky" 
-                                 src="https://placehold.co/300x600/ffcc00/000000?text=1/3+CONSTRUTORA+FUTURO&font=roboto" 
-                                 class="w-full h-full object-cover banner-fade absolute inset-0" 
-                                 alt="Construtora Futuro" 
-                                 loading="lazy">
-                        </a>
-                        <a href="#" class="w-full border border-green-500 text-green-600 hover:bg-green-50 text-xs font-bold py-2 rounded uppercase transition flex items-center justify-center gap-2">
-                            <i data-lucide="message-circle" class="w-3 h-3"></i> Fale no WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-            </aside>
-        </div>
-    </main>
-
-    <!-- FOOTER & NAV MOBILE -->
-    <footer class="bg-[#111] text-gray-400 py-16 text-sm border-t-4 border-brand-red mt-12">
-        <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-12">
-                <div class="md:col-span-2">
-                    <h3 class="text-white text-3xl font-black uppercase mb-6 italic tracking-tighter">JOÃO<span class="text-brand-red">ALENCAR</span></h3>
-                    <p class="mb-6 leading-relaxed max-w-sm text-gray-500 font-serif">O Portal João Alencar Olho da Notícia é referência em jornalismo policial e comunitário.</p>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-12 pt-8 text-xs text-gray-600"><p>&copy; 2026 JOÃO ALENCAR.</p></div>
-        </div>
-    </footer>
-
-    <div class="glass-effect fixed bottom-0 left-0 w-full bg-white/90 border-t border-gray-200 flex lg:hidden justify-between px-6 items-center h-16 z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] pb-safe">
-        <a href="#" class="flex flex-col items-center justify-center text-brand-red group"><i data-lucide="home" class="w-6 h-6 mb-1"></i><span class="text-[10px] font-bold">Capa</span></a>
-        <a href="#" class="flex flex-col items-center justify-center text-gray-400 group"><i data-lucide="search" class="w-6 h-6 mb-1"></i><span class="text-[10px] font-medium">Busca</span></a>
-        <div class="relative -top-6"><a href="#" class="flex items-center justify-center w-14 h-14 bg-brand-red rounded-full text-white shadow-xl"><i data-lucide="play" class="w-6 h-6 ml-1 fill-current"></i></a></div>
-        <a href="#" class="flex flex-col items-center justify-center text-gray-400 group"><i data-lucide="message-circle" class="w-6 h-6 mb-1"></i><span class="text-[10px] font-medium">Zap</span></a>
-        <button id="menu-mobile-trigger" class="flex flex-col items-center justify-center text-gray-400 group"><i data-lucide="menu" class="w-6 h-6 mb-1"></i><span class="text-[10px] font-medium">Menu</span></button>
-    </div>
-
-    <!-- SCRIPTS -->
-    <script>
-        lucide.createIcons();
-
-        // --- LÓGICA DE BANNERS ROTATIVOS (TRIETO) ---
-        // Agora suporta IDs específicos para Mobile e Desktop
+        let configToUse = defaultFirebaseConfig;
+        try {
+            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                configToUse = JSON.parse(__firebase_config);
+            }
+        } catch (err) {
+            console.warn("A usar configuração pré-definida.");
+        }
         
-        const bannerConfigs = {
-            // TOPO
-            'banner-desktop-top': [
-                "https://placehold.co/970x120/cc0000/ffffff?text=1/3+MADEIREIRA+PITOMBEIRA&font=roboto",
-                "https://placehold.co/970x120/003366/ffffff?text=2/3+PROVEDOR+INTERNET+VELOX&font=roboto",
-                "https://placehold.co/970x120/004d40/ffffff?text=3/3+SUPERMERCADO+DO+POVO&font=roboto"
-            ],
-            'banner-mobile-top': [
-                "https://placehold.co/970x120/cc0000/ffffff?text=1/3+MADEIREIRA+PITOMBEIRA&font=roboto",
-                "https://placehold.co/970x120/003366/ffffff?text=2/3+PROVEDOR+INTERNET+VELOX&font=roboto",
-                "https://placehold.co/970x120/004d40/ffffff?text=3/3+SUPERMERCADO+DO+POVO&font=roboto"
-            ],
-            
-            // FEED 1 (Separado Desktop e Mobile)
-            'banner-feed-1-desktop': [
-                "https://placehold.co/728x90/eeeeee/333333?text=1/3+INTERNET+FIBRA+DESKTOP&font=roboto",
-                "https://placehold.co/728x90/ff6600/ffffff?text=2/3+CURSINHO+PRÉ-VESTIBULAR&font=roboto",
-                "https://placehold.co/728x90/6600cc/ffffff?text=3/3+PLANO+DE+SAÚDE+FAMILIAR&font=roboto"
-            ],
-            'banner-feed-1-mobile': [
-                "https://placehold.co/300x250/eeeeee/333333?text=1/3+OFERTA+MOBILE+EXCLUSIVA&font=roboto",
-                "https://placehold.co/300x250/ff6600/ffffff?text=2/3+CLIQUE+AQUI+DESCONTO&font=roboto",
-                "https://placehold.co/300x250/6600cc/ffffff?text=3/3+PROMOÇÃO+RELÂMPAGO&font=roboto"
-            ],
+        const appIdToUse = typeof __app_id !== 'undefined' && __app_id ? __app_id : 'portal-joao-alencar';
 
-            // FEED 2 (Separado Desktop e Mobile)
-            'banner-feed-2-desktop': [
-                "https://placehold.co/728x90/004d40/ffffff?text=1/3+FARMÁCIA+SANTA+MARIA&font=roboto",
-                "https://placehold.co/728x90/cc0000/ffffff?text=2/3+LOJÃO+DOS+MÓVEIS&font=roboto",
-                "https://placehold.co/728x90/0033cc/ffffff?text=3/3+POSTO+DE+GASOLINA+CENTRAL&font=roboto"
-            ],
-            'banner-feed-2-mobile': [
-                "https://placehold.co/300x250/004d40/ffffff?text=1/3+PROMOÇÃO+FARMÁCIA&font=roboto",
-                "https://placehold.co/300x250/cc0000/ffffff?text=2/3+MÓVEIS+EM+OFERTA&font=roboto",
-                "https://placehold.co/300x250/0033cc/ffffff?text=3/3+GASOLINA+BARATA&font=roboto"
-            ],
+        const firebaseApp = initializeApp(configToUse);
+        const auth = getAuth(firebaseApp);
+        const db = getFirestore(firebaseApp);
 
-            // SIDEBAR STICKY (Desktop) + EXTRA MOBILE
-            'banner-sidebar-sticky': [
-                "https://placehold.co/300x600/ffcc00/000000?text=1/3+CONSTRUTORA+FUTURO&font=roboto",
-                "https://placehold.co/300x600/cc0000/ffffff?text=2/3+AUTOESCOLA+NOTA+10&font=roboto",
-                "https://placehold.co/300x600/006600/ffffff?text=3/3+CLÍNICA+SORRISO+PERFEITO&font=roboto"
-            ],
-            'banner-feed-mobile-extra': [
-                "https://placehold.co/300x250/ffcc00/000000?text=1/3+CONSTRUTORA+FUTURO&font=roboto",
-                "https://placehold.co/300x250/cc0000/ffffff?text=2/3+AUTOESCOLA+NOTA+10&font=roboto",
-                "https://placehold.co/300x250/006600/ffffff?text=3/3+CLÍNICA+SORRISO+PERFEITO&font=roboto"
-            ]
+        // 2. GESTÃO DE ESTADO (STATE)
+        const state = {
+            user: null,
+            news: [],
+            banners: {
+                'banner-desktop-top': ["https://placehold.co/970x120/1e3a8a/ffffff?text=SEU+ANUNCIO+AQUI"],
+                'banner-mobile-top': ["https://placehold.co/970x120/1e3a8a/ffffff?text=SEU+ANUNCIO+AQUI"],
+                'banner-sidebar-sticky': ["https://placehold.co/300x600/1e3a8a/ffffff?text=PARCEIRO+DESTAQUE"],
+                'banner-feed-1-desktop': ["https://placehold.co/728x90/1e3a8a/ffffff?text=DESTAQUE+FEED"],
+                'banner-feed-1-mobile': ["https://placehold.co/300x250/1e3a8a/ffffff?text=DESTAQUE+FEED"],
+                'banner-feed-mobile-extra': ["https://placehold.co/300x250/1e3a8a/ffffff?text=PARCEIRO+DESTAQUE"]
+            },
+            bannerIntervals: {}
         };
 
-        function startBannerRotation() {
-            Object.keys(bannerConfigs).forEach(id => {
+        // 3. FUNÇÕES UTILITÁRIAS
+        const formatDate = (isoString) => {
+            if (!isoString) return { full: '', time: '', date: '' };
+            const d = new Date(isoString);
+            return {
+                full: d.toLocaleDateString('pt-PT') + ' às ' + d.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
+                time: d.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
+                date: d.toLocaleDateString('pt-PT')
+            };
+        };
+
+        const showToast = (msg) => {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
+            t.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => t.classList.add('translate-y-20', 'opacity-0'), 3000);
+        };
+
+        // 4. LÓGICA DE NAVEGAÇÃO E MODAIS (UI)
+        const toggleLoginModal = (show) => {
+            const modal = document.getElementById('login-modal');
+            const box = document.getElementById('login-box');
+            if(show) {
+                modal.classList.remove('invisible', 'opacity-0');
+                setTimeout(() => box.classList.remove('scale-95'), 10);
+            } else {
+                box.classList.add('scale-95');
+                setTimeout(() => modal.classList.add('invisible', 'opacity-0'), 200);
+            }
+        };
+
+        const openAdminPanel = () => {
+            document.body.style.overflow = 'hidden';
+            document.getElementById('admin-overlay').classList.remove('translate-x-full');
+        };
+
+        const closeAdminPanel = () => {
+            document.body.style.overflow = 'auto';
+            document.getElementById('admin-overlay').classList.add('translate-x-full');
+        };
+
+        const switchAdminTab = (tab) => {
+            ['news', 'banners'].forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                document.getElementById(`nav-${t}`).classList.remove('bg-brand-blue', 'text-white', 'shadow-lg');
+                document.getElementById(`nav-${t}`).classList.add('text-gray-400');
+            });
+            document.getElementById(`view-${tab}`).classList.remove('hidden');
+            document.getElementById(`nav-${tab}`).classList.add('bg-brand-blue', 'text-white', 'shadow-lg');
+            document.getElementById(`nav-${tab}`).classList.remove('text-gray-400');
+            document.getElementById('admin-page-title').textContent = tab === 'news' ? 'Redação Central' : 'Gestão de Banners';
+        };
+
+        const goHome = () => {
+            document.getElementById('view-article').classList.add('hidden');
+            document.getElementById('view-home').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        const openArticle = (id) => {
+            const news = state.news.find(n => n.id === id);
+            if(!news) return;
+
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-article').classList.remove('hidden');
+            
+            document.getElementById('article-title').textContent = news.title;
+            document.getElementById('article-category').textContent = news.category;
+            
+            let catColor = "bg-blue-900";
+            if(news.category === 'Policial') catColor = "bg-brand-red";
+            if(news.category === 'Esportes') catColor = "bg-brand-yellow";
+            if(news.category === 'Cotidiano') catColor = "bg-green-700";
+            document.getElementById('article-category').className = `${catColor} text-white text-[10px] font-bold px-3 py-1.5 uppercase rounded shadow-sm mb-4 inline-block`;
+            
+            document.getElementById('article-summary').textContent = news.summary;
+            
+            const fDate = formatDate(news.date);
+            document.getElementById('article-date').textContent = fDate.full;
+            document.getElementById('article-author').textContent = news.author || 'Redação João Alencar';
+            
+            const imgEl = document.getElementById('article-image');
+            imgEl.src = news.image;
+            imgEl.style.display = 'block'; 
+            
+            // Segurança: Injeção segura de parágrafos via textContent
+            const contentContainer = document.getElementById('article-content');
+            contentContainer.innerHTML = '';
+            const safeContent = news.content || news.summary || 'Conteúdo não disponível.';
+            
+            safeContent.split('\n').filter(p => p.trim() !== '').forEach(p => {
+                const paragraph = document.createElement('p');
+                paragraph.className = 'mb-4';
+                paragraph.textContent = p.trim();
+                contentContainer.appendChild(paragraph);
+            });
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // 5. MOTOR DE BANNERS E ROTAÇÃO
+        const startBannerRotation = () => {
+            Object.keys(state.banners).forEach(id => {
+                if (state.bannerIntervals[id]) clearInterval(state.bannerIntervals[id]);
+
                 const imgElement = document.getElementById(id);
                 if (!imgElement) return;
 
-                let currentIndex = 0;
-                const images = bannerConfigs[id];
+                const images = state.banners[id];
+                if (!images || images.length === 0) return;
+                
+                imgElement.src = images[0];
 
-                setInterval(() => {
-                    imgElement.classList.add('hidden-opacity');
-                    setTimeout(() => {
-                        currentIndex = (currentIndex + 1) % images.length;
-                        imgElement.src = images[currentIndex];
-                        imgElement.onload = () => {
-                            imgElement.classList.remove('hidden-opacity');
-                        };
-                    }, 500);
-                }, 3000);
+                if (images.length > 1) {
+                    let currentIndex = 0;
+                    state.bannerIntervals[id] = setInterval(() => {
+                        imgElement.classList.add('hidden-opacity');
+                        setTimeout(() => {
+                            currentIndex = (currentIndex + 1) % images.length;
+                            imgElement.src = images[currentIndex];
+                            imgElement.onload = () => imgElement.classList.remove('hidden-opacity');
+                        }, 500);
+                    }, 3000);
+                }
             });
-        }
+        };
 
-        document.addEventListener('DOMContentLoaded', startBannerRotation);
+        const loadBannersIntoForms = async () => {
+            try {
+                const snap = await getDoc(doc(db, 'artifacts', appIdToUse, 'public', 'data', 'banners', 'config'));
+                if (snap.exists()) {
+                    const data = snap.data();
+                    if(data.desktop) {
+                        document.getElementById('input-desktop-1').value = data.desktop[0] || '';
+                        document.getElementById('input-desktop-2').value = data.desktop[1] || '';
+                    }
+                    if(data.sidebar) {
+                        document.getElementById('input-sidebar-1').value = data.sidebar[0] || '';
+                        document.getElementById('input-sidebar-2').value = data.sidebar[1] || '';
+                    }
+                    if(data.feed1_desktop) document.getElementById('input-feed1-desktop').value = data.feed1_desktop;
+                    if(data.feed1_mobile) document.getElementById('input-feed1-mobile').value = data.feed1_mobile;
+                }
+            } catch(e) { console.error("Error loading forms", e); }
+        };
 
-        // Date Logic
-        const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-        const dateStr = new Date().toLocaleDateString('pt-BR', dateOptions);
-        document.getElementById('current-date').innerHTML = `<i data-lucide="clock" class="w-3 h-3"></i> ${dateStr.charAt(0).toUpperCase() + dateStr.slice(1)}`;
-        lucide.createIcons({ nameAttr: 'data-lucide', attrs: {class: "w-3 h-3"} });
+        const saveBanners = async () => {
+            if(!state.user) return;
+            const bannerData = {
+                desktop: [document.getElementById('input-desktop-1').value, document.getElementById('input-desktop-2').value].filter(Boolean),
+                sidebar: [document.getElementById('input-sidebar-1').value, document.getElementById('input-sidebar-2').value].filter(Boolean),
+                feed1_desktop: document.getElementById('input-feed1-desktop').value,
+                feed1_mobile: document.getElementById('input-feed1-mobile').value
+            };
+            try {
+                await setDoc(doc(db, 'artifacts', appIdToUse, 'public', 'data', 'banners', 'config'), bannerData);
+                showToast('Todos os banners atualizados no site em tempo real!');
+            } catch (e) { showToast('Erro ao guardar banners.'); }
+        };
 
-        // Menu Mobile Logic
-        const menuOpenBtn = document.getElementById('menu-open-btn');
-        const menuCloseBtn = document.getElementById('menu-close-btn');
-        const mobileTriggerBottom = document.getElementById('menu-mobile-trigger');
-        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
-
-        function toggleMenu(show) {
-            if (show) {
-                mobileMenuOverlay.classList.remove('invisible', 'opacity-0');
-                mobileMenuOverlay.classList.add('visible', 'opacity-100');
-                mobileMenuPanel.classList.remove('-translate-x-full');
-                document.body.style.overflow = 'hidden';
-            } else {
-                mobileMenuOverlay.classList.remove('visible', 'opacity-100');
-                mobileMenuOverlay.classList.add('invisible', 'opacity-0');
-                mobileMenuPanel.classList.add('-translate-x-full');
-                document.body.style.overflow = 'auto';
+        // 6. GESTÃO DE NOTÍCIAS (CRUD)
+        const saveNews = async () => {
+            if(!state.user) return;
+            const btn = document.getElementById('btn-publish-news');
+            btn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> A publicar...';
+            
+            const newsData = {
+                title: document.getElementById('news-title').value,
+                category: document.getElementById('news-category').value,
+                author: document.getElementById('news-author').value || 'Redação',
+                image: document.getElementById('news-image').value,
+                summary: document.getElementById('news-summary').value,
+                content: document.getElementById('news-content').value,
+                date: new Date().toISOString()
+            };
+            try {
+                await addDoc(collection(db, 'artifacts', appIdToUse, 'public', 'data', 'news'), newsData);
+                showToast('Artigo publicado! Irá aparecer na capa.');
+                document.getElementById('news-title').value = '';
+                document.getElementById('news-image').value = '';
+                document.getElementById('news-summary').value = '';
+                document.getElementById('news-content').value = '';
+            } catch (e) { 
+                showToast('Erro ao publicar notícia.'); 
+            } finally { 
+                btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Publicar Artigo';
+                lucide.createIcons();
             }
-        }
+        };
 
-        menuOpenBtn.addEventListener('click', () => toggleMenu(true));
-        mobileTriggerBottom.addEventListener('click', () => toggleMenu(true));
-        menuCloseBtn.addEventListener('click', () => toggleMenu(false));
-        mobileMenuOverlay.addEventListener('click', (e) => {
-            if (e.target === mobileMenuOverlay) toggleMenu(false);
+        const deleteNews = async (id) => {
+            if(!confirm('Atenção! Eliminar esta notícia do portal?')) return;
+            try {
+                await deleteDoc(doc(db, 'artifacts', appIdToUse, 'public', 'data', 'news', id));
+                showToast('Notícia removida com sucesso.');
+            } catch(e) { console.error("Error deleting", e); }
+        };
+
+        // 7. FIREBASE LISTENERS (TEMPO REAL)
+        const startDatabaseListeners = () => {
+            if (!state.user) return;
+            
+            onSnapshot(doc(db, 'artifacts', appIdToUse, 'public', 'data', 'banners', 'config'), (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if(data.desktop && data.desktop.length > 0) {
+                        const validDesktop = data.desktop.filter(url => url);
+                        if(validDesktop.length > 0) {
+                            state.banners['banner-desktop-top'] = validDesktop;
+                            state.banners['banner-mobile-top'] = validDesktop; 
+                        }
+                    }
+                    if(data.sidebar && data.sidebar.length > 0) {
+                        const validSidebar = data.sidebar.filter(url => url);
+                        if(validSidebar.length > 0) {
+                            state.banners['banner-sidebar-sticky'] = validSidebar;
+                            state.banners['banner-feed-mobile-extra'] = validSidebar;
+                        }
+                    }
+                    if(data.feed1_desktop) state.banners['banner-feed-1-desktop'] = [data.feed1_desktop];
+                    if(data.feed1_mobile) state.banners['banner-feed-1-mobile'] = [data.feed1_mobile];
+                    
+                    startBannerRotation();
+                }
+            }, (err) => console.log("Banners erro/ignorado", err));
+
+            onSnapshot(collection(db, 'artifacts', appIdToUse, 'public', 'data', 'news'), (snapshot) => {
+                const publicFeed = document.getElementById('dynamic-news-feed');
+                const adminFeed = document.getElementById('admin-news-list');
+                const heroElement = document.getElementById('dynamic-hero');
+                
+                if (snapshot.empty) {
+                    publicFeed.innerHTML = '<div class="col-span-1 md:col-span-2 text-center py-10 text-gray-400">O portal está a aguardar novas publicações.</div>';
+                    if(adminFeed) adminFeed.innerHTML = '<div class="p-6 text-center text-gray-400 text-sm">Sem notícias publicadas.</div>';
+                    if(heroElement) heroElement.classList.add('hidden');
+                    return;
+                }
+
+                const docs = [];
+                snapshot.forEach(docSnap => docs.push({id: docSnap.id, ...docSnap.data()}));
+                docs.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+                state.news = docs;
+
+                publicFeed.innerHTML = ''; 
+                if(adminFeed) adminFeed.innerHTML = '';
+                
+                if (docs.length > 0 && heroElement) {
+                    const heroNews = docs[0];
+                    const fDateHero = formatDate(heroNews.date);
+                    heroElement.classList.remove('hidden');
+                    heroElement.onclick = () => window.app.openArticle(heroNews.id);
+                    heroElement.innerHTML = `
+                        <div class="absolute inset-0 overflow-hidden">
+                            <img src="${heroNews.image}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition duration-700" onerror="this.src='https://placehold.co/1000x500?text=Sem+Imagem'">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        <div class="absolute top-4 left-4 z-10"><span class="bg-brand-red text-white text-xs font-black px-4 py-1.5 uppercase shadow-md rounded tracking-wider">${heroNews.category}</span></div>
+                        <div class="absolute bottom-0 left-0 w-full p-5 md:p-8 text-white z-10">
+                            <h2 class="text-2xl md:text-4xl lg:text-5xl font-black leading-tight mb-4 drop-shadow-lg group-hover:text-yellow-400 transition-colors font-sans">${heroNews.title}</h2>
+                            <div class="flex flex-wrap items-center text-xs md:text-sm text-gray-300 gap-4 md:gap-6 font-medium mb-2">
+                                <span class="flex items-center gap-1.5"><i data-lucide="user" class="w-3 h-3 text-brand-red"></i> ${heroNews.author || 'Redação'}</span>
+                                <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-3 h-3 text-brand-red"></i> ${fDateHero.date}</span>
+                                <span class="bg-brand-red text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase animate-pulse">Destaque Principal</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                const feedDocs = docs.slice(1);
+                if(feedDocs.length === 0) publicFeed.innerHTML = '<div class="col-span-1 md:col-span-2 text-center py-6 text-gray-400 text-sm">Mais notícias em breve.</div>';
+
+                feedDocs.forEach(news => {
+                    const fDate = formatDate(news.date);
+                    const pCard = document.createElement('article');
+                    pCard.className = 'bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group fade-enter cursor-pointer';
+                    pCard.onclick = (e) => { e.preventDefault(); window.app.openArticle(news.id); };
+                    
+                    let catColor = "bg-blue-900";
+                    if(news.category === 'Policial') catColor = "bg-brand-red";
+                    if(news.category === 'Esportes') catColor = "bg-brand-yellow";
+                    if(news.category === 'Cotidiano') catColor = "bg-green-700";
+
+                    pCard.innerHTML = `
+                        <div class="flex flex-col h-full">
+                            <div class="h-52 overflow-hidden relative bg-gray-200">
+                                <img src="${news.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" onerror="this.src='https://placehold.co/600x400?text=Sem+Imagem'">
+                                <span class="absolute top-3 left-3 ${catColor} text-white text-[10px] font-bold px-2 py-1 uppercase rounded shadow-sm">${news.category}</span>
+                            </div>
+                            <div class="p-5 flex flex-col flex-grow">
+                                <h3 class="font-bold text-lg leading-snug text-gray-800 mb-3 group-hover:text-brand-red transition-colors line-clamp-3">${news.title}</h3>
+                                <p class="text-sm text-gray-500 mb-4 line-clamp-3 flex-grow leading-relaxed">${news.summary}</p>
+                                <div class="flex items-center justify-between pt-4 border-t border-gray-50 mt-auto">
+                                    <span class="text-xs text-gray-400 font-bold flex items-center gap-1">
+                                        <i data-lucide="clock" class="w-3 h-3"></i> ${fDate.time}
+                                    </span>
+                                    <span class="text-[10px] font-bold text-brand-blue uppercase"><i data-lucide="user" class="w-3 h-3 inline"></i> ${news.author || 'Redação'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    publicFeed.appendChild(pCard);
+                });
+
+                docs.forEach(news => {
+                    if(adminFeed) {
+                        const fDateA = formatDate(news.date);
+                        const aCard = document.createElement('div');
+                        aCard.className = 'p-4 flex items-center justify-between hover:bg-gray-50 transition border-b fade-enter';
+                        aCard.innerHTML = `
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-[9px] font-bold uppercase text-white bg-brand-dark px-1.5 py-0.5 rounded">${news.category}</span>
+                                    <span class="text-[10px] text-gray-400"><i data-lucide="user" class="w-3 h-3 inline"></i> ${news.author || 'Redação'}</span>
+                                </div>
+                                <h4 class="text-sm font-bold text-gray-800 line-clamp-1">${news.title}</h4>
+                                <p class="text-xs text-gray-500">${fDateA.date} ${fDateA.time}</p>
+                            </div>
+                            <button class="btn-delete text-red-400 hover:text-red-600 p-2 bg-red-50 rounded" title="Apagar Publicação">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        `;
+                        aCard.querySelector('.btn-delete').onclick = () => window.app.deleteNews(news.id);
+                        adminFeed.appendChild(aCard);
+                    }
+                });
+                
+                lucide.createIcons();
+            }, (err) => console.log("Noticias ignoradas/erro", err));
+        };
+
+        // 8. AUTENTICAÇÃO
+        const logoutAdmin = async () => {
+            if(confirm("Tem a certeza que deseja terminar a sessão?")) {
+                await signOut(auth);
+                closeAdminPanel();
+                window.location.reload(); 
+            }
+        };
+
+        document.getElementById('auth-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const usernameInput = document.getElementById('auth-user').value.trim().toLowerCase().replace(/\s+/g, '');
+            const pass = document.getElementById('auth-pass').value;
+            const btn = document.getElementById('auth-submit-btn');
+            
+            const email = usernameInput.includes('@') ? usernameInput : `${usernameInput}@admin.com`;
+            btn.innerHTML = '<i data-lucide="loader" class="w-5 h-5 animate-spin mx-auto"></i>';
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                toggleLoginModal(false);
+                showToast("Sessão iniciada com sucesso.");
+                openAdminPanel();
+                document.getElementById('auth-user').value = '';
+                document.getElementById('auth-pass').value = '';
+            } catch (error) {
+                console.error("Erro Login:", error);
+                alert("Acesso negado. Verifique o nome de utilizador e a palavra-passe.");
+            } finally {
+                btn.textContent = 'Entrar Seguramente';
+            }
         });
+
+        // 9. INICIALIZAÇÃO DA APLICAÇÃO E EXPOSIÇÃO GLOBAL SEGURA
+        window.app = {
+            openArticle,
+            goHome,
+            saveNews,
+            deleteNews,
+            saveBanners,
+            openAdminPanel,
+            closeAdminPanel,
+            switchAdminTab,
+            toggleLoginModal,
+            logoutAdmin
+        };
+
+        const initializeAppAuth = async () => {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (e) { console.warn("Aviso Auth", e); }
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    state.user = user;
+                    startDatabaseListeners(); 
+                    if (!user.isAnonymous) {
+                        document.getElementById('btn-login-trigger').classList.add('hidden');
+                        document.getElementById('btn-admin-trigger').classList.remove('hidden');
+                        document.getElementById('fab-admin').classList.remove('hidden');
+                        loadBannersIntoForms();
+                    }
+                } else {
+                    state.user = null;
+                }
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            startBannerRotation();
+            
+            const d = new Date();
+            document.getElementById('current-date').innerHTML = `<i data-lucide="clock" class="w-3 h-3"></i> ${d.toLocaleDateString('pt-PT', {weekday:'long', day:'numeric', month:'long'})}`;
+            
+            const mo = document.getElementById('mobile-menu-overlay');
+            const mp = document.getElementById('mobile-menu-panel');
+            document.getElementById('menu-open-btn').onclick = () => { mo.classList.remove('invisible','opacity-0'); mp.classList.remove('-translate-x-full'); };
+            document.getElementById('menu-close-btn').onclick = () => { mo.classList.add('invisible','opacity-0'); mp.classList.add('-translate-x-full'); };
+            
+            lucide.createIcons();
+            initializeAppAuth();
+        });
+
     </script>
 </body>
 </html>
